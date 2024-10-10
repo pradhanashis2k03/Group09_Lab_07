@@ -13,7 +13,7 @@ int main(void) {
     LED_Init();
 
     while (1) {
-        char received = UART1_ReadChar();  // Read character from UART1
+        received = UART1_ReadChar();  // Read character from UART1
         LED_Control(received);             // Control LED based on received data
     }
 }
@@ -40,7 +40,7 @@ void UART1_Init(void) {
 
 char UART1_ReadChar(void) {
     while ((UART1_FR_R & 0x10) != 0);  // Wait until the Rx buffer is not empty
-    return (char)(UART1_DR_R & 0xFF);  // Read the received character
+    return UART1_DR_R & 0xFF;  // Read the received character
 }
 
 void LED_Init(void) {
@@ -58,7 +58,7 @@ void LED_Control(char receivedData) {
     GPIO_PORTF_DATA_R &= ~(0x0E);
 
     // Control LEDs based on received data
-    if (receivedData == 'a') {                  // "aa" received as two 'a' characters
+    if (receivedData == 0xAA) {                  // "aa" received as two 'a' characters
         GPIO_PORTF_DATA_R |= (1 << 3);          // Turn on green LED (PF3)
     } else if (receivedData == 0xF0) {          // "f0" received as a byte
         GPIO_PORTF_DATA_R |= (1 << 2);          // Turn on blue LED (PF2)
