@@ -57,7 +57,6 @@ int main(void) {
     UART1_FBRD_R = 11;                 // Fractional portion of BRD
     UART1_LCRH_R = (0x3 << 5);         // 8-bit, no parity, 1 stop bit
     UART1_CC_R = 0x0;                  // Use system clock for UART
-    UART1_CTL_R |= (0x01 | 0x200);     // Enable UART1 and Tx
 
     // Configure interrupt for PF0 and PF4
     GPIO_PORTF_IM_R &= ~(0x11);        // Disable interrupts for PF0 and PF4
